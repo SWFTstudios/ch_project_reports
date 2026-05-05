@@ -1294,6 +1294,44 @@
   line-height: 1.4;
 }
 
+.project-status-badge {
+  display: inline-block;
+  width: fit-content;
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--eoyr-black, #0a0a0a);
+  background: var(--eoyr-neon-green, #00ff41);
+  border: 1px solid var(--eoyr-neon-green, #00ff41);
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem;
+  box-shadow: 0 0 10px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+}
+
+.project-meta-link {
+  font-family: "Exo 2", sans-serif;
+  font-size: 0.75rem;
+  color: var(--eoyr-neon-green-dim, #00cc33);
+  opacity: 0.85;
+  word-break: break-word;
+}
+
+.project-preview-fallback {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0.75rem;
+  font-family: "Audiowide", sans-serif;
+  font-size: 0.8rem;
+  color: var(--eoyr-neon-green, #00ff41);
+  text-shadow: 0 0 8px var(--eoyr-neon-green-glow, rgba(0, 255, 65, 0.3));
+}
+
 /* Navigation thin font for styleguide link */
 .nav-link-thin {
   font-weight: 300 !important;

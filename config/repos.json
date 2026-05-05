@@ -2,6 +2,10 @@
   "organization": "core-home-web",
   "repos": [
     {
+      "name": "manna-hydration",
+      "displayName": "Manna Hydration"
+    },
+    {
       "name": "hydragearbottle_website",
       "displayName": "Hydragear Bottle"
     },
@@ -18,8 +22,24 @@
       "displayName": "People of Spice"
     },
     {
+      "name": "thyme-and-table",
+      "displayName": "Thyme & Table"
+    },
+    {
       "name": "spice-st-market",
       "displayName": "Spice St Market"
+    },
+    {
+      "name": "roam-and-repeat",
+      "displayName": "Roam and Repeat"
+    },
+    {
+      "name": "grand-savonnerie",
+      "displayName": "Grand Savonnerie"
+    },
+    {
+      "name": "scribble-and-scribe",
+      "displayName": "Scribble & Scribe"
     }
   ],
   "defaultDateRange": "3months",

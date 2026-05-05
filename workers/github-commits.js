@@ -393,10 +393,14 @@ async function getRepos(env) {
   const reposConfig = env.REPOS_CONFIG || JSON.stringify({
     organization: "core-home-web",
     repos: [
+      { name: "manna-hydration", displayName: "Manna Hydration" },
       { name: "hydragearbottle_website", displayName: "Hydragear Bottle" },
       { name: "core_render_portal", displayName: "Core Render Portal" },
       { name: "outlaw_spice", displayName: "Outlaw Spice" },
       { name: "people_of_spice", displayName: "People of Spice" },
+      { name: "roam-and-repeat", displayName: "Roam and Repeat" },
+      { name: "grand-savonnerie", displayName: "Grand Savonnerie" },
+      { name: "scribble-and-scribe", displayName: "Scribble & Scribe" },
       { name: "thyme-and-table", displayName: "Thyme & Table" },
       { name: "spice-st-market", displayName: "Spice St Market" }
     ]
