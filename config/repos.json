@@ -40,6 +40,10 @@
     {
       "name": "scribble-and-scribe",
       "displayName": "Scribble & Scribe"
+    },
+    {
+      "name": "core-finish-library",
+      "displayName": "Core Finish Library"
     }
   ],
   "defaultDateRange": "3months",
