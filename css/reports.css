@@ -4,16 +4,21 @@
  * Colors come from the --rp-* tokens below; Paper swaps them to black on white.
  */
 
+/*
+ * Matrix tokens all derive from --eoyr-neon-green, which the color picker
+ * sets on <html>, so every page and component shares one neon color.
+ */
 body {
-  --rp-bg: #050805;
-  --rp-surface: #0b130b;
-  --rp-ink: #d9ffe3;
-  --rp-muted: #8fc49d;
-  --rp-accent: #00ff41;
-  --rp-line: rgba(0, 255, 65, 0.28);
-  --rp-line-strong: rgba(0, 255, 65, 0.6);
-  --rp-tint: rgba(0, 255, 65, 0.08);
-  --rp-on-accent: #001a00;
+  --rp-accent: var(--eoyr-neon-green, #00ff41);
+  --rp-bg: #050505;
+  --rp-surface: color-mix(in srgb, var(--rp-accent) 5%, #080808);
+  --rp-ink: color-mix(in srgb, var(--rp-accent) 14%, #f2f2f2);
+  --rp-muted: color-mix(in srgb, var(--rp-accent) 45%, #8c8c8c);
+  --rp-line: color-mix(in srgb, var(--rp-accent) 30%, transparent);
+  --rp-line-strong: color-mix(in srgb, var(--rp-accent) 65%, transparent);
+  --rp-tint: color-mix(in srgb, var(--rp-accent) 9%, transparent);
+  --rp-glow: color-mix(in srgb, var(--rp-accent) 35%, transparent);
+  --rp-on-accent: #050505;
   --rp-radius: 10px;
   --rp-display: 'Audiowide', 'Exo 2', sans-serif;
   --rp-text: 'Exo 2', system-ui, sans-serif;
@@ -28,7 +33,9 @@ body[data-theme="plain"] {
   --rp-line: #d0d0d0;
   --rp-line-strong: #000000;
   --rp-tint: #f2f2f2;
+  --rp-glow: transparent;
   --rp-on-accent: #ffffff;
+  --rp-radius: 0px;
 }
 
 /* ---------- Page frame ---------- */
@@ -571,10 +578,10 @@ body[data-theme="plain"] .rp-filter[aria-pressed="true"] {
   min-height: 40px;
   padding: 0 14px;
   margin-right: 10px;
-  border: 1px solid var(--eoyr-neon-green, #00ff41);
+  border: 1px solid var(--rp-accent);
   border-radius: 999px;
   background: transparent;
-  color: var(--eoyr-neon-green, #00ff41);
+  color: var(--rp-accent);
   font-family: 'Exo 2', sans-serif;
   font-size: 0.85rem;
   font-weight: 600;
@@ -600,15 +607,7 @@ body[data-theme="plain"] .tq-dot {
   box-shadow: none;
 }
 
-/* Paper theme turns hovered buttons black but forces inner spans black too */
-body[data-theme="plain"] .rp-main button:hover *,
-body[data-theme="plain"] .theme-quick-toggle:hover * {
-  color: #fff !important;
-}
 
-body[data-theme="plain"] .theme-quick-toggle:hover .tq-dot {
-  background: #fff !important;
-}
 
 
 /* ---------- Phones ---------- */

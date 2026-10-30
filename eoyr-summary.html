@@ -19,7 +19,7 @@
     body[data-theme="plain"] { --bg: #fff; --panel: #fff; --ink: #000; --muted: #444; --accent: #000; --line: #d0d0d0; }
     body[data-theme="plain"], body[data-theme="plain"] * { font-family: Helvetica, Arial, sans-serif !important; }
     * { box-sizing: border-box; }
-    body { --bg: #0a0a0a; --panel: #101a10; --ink: #e8f5e8; --muted: #9db59d; --accent: #00ff41; --line: rgba(0, 255, 65, 0.22); margin: 0; background: var(--bg); color: var(--ink); font-family: 'Exo 2', system-ui, sans-serif; line-height: 1.45; }
+    body { --accent: var(--eoyr-neon-green, #00ff41); --bg: #050505; --panel: color-mix(in srgb, var(--accent) 5%, #080808); --ink: color-mix(in srgb, var(--accent) 14%, #f2f2f2); --muted: color-mix(in srgb, var(--accent) 45%, #8c8c8c); --line: color-mix(in srgb, var(--accent) 30%, transparent); margin: 0; background: var(--bg); color: var(--ink); font-family: 'Exo 2', system-ui, sans-serif; line-height: 1.45; }
     .page { max-width: 1040px; margin: 0 auto; padding: 88px 16px 48px; }
     .topnav { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.85rem; margin-bottom: 20px; }
     .topnav { align-items: center; }
@@ -145,6 +145,7 @@
   <script src="js/projects-data.js"></script>
   <script src="js/projects.js"></script>
   <script src="js/site-menu.js"></script>
+  <script src="js/color-picker.js"></script>
   <script type="module" src="js/spline-logo.js"></script>
 </body>
 </html>

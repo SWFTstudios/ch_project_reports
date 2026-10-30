@@ -386,15 +386,6 @@ body[data-theme="plain"] .sm-panel {
   display: none;
 }
 
-/* Paper theme hovers turn buttons black; keep their text readable */
-body[data-theme="plain"] #site-menu button:hover *,
-body[data-theme="plain"] .pp-main button:hover * {
-  color: #fff !important;
-}
-
-body[data-theme="plain"] #site-menu button:hover .tq-dot {
-  background: #fff !important;
-}
 
 .sm-link:focus-visible,
 .sm-slide:focus-visible,
@@ -481,4 +472,114 @@ body[data-theme="plain"] #site-menu button:hover .tq-dot {
   .sm-panel {
     transition: none;
   }
+}
+
+/* ==========================================================================
+   Interaction states for both themes
+   ========================================================================== */
+
+/* Text controls: buttons, pills, links styled as boxes */
+:is(.rp-btn, .rp-more, .rp-filter, .rp-link, .rp-mini-link, .sm-link, .sm-util,
+    .sm-close, .sm-open, .sm-arrow, .theme-quick-toggle, .pp-pager a, .rp-compact,
+    #eoyr-filter-toggle) {
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+/* Matrix: hover brightens the border and adds the shared neon glow */
+body:not([data-theme="plain"]) :is(.rp-more, .rp-filter, .rp-link, .rp-mini-link, .sm-link,
+    .sm-util, .sm-close, .sm-arrow, .theme-quick-toggle, .pp-pager a, .rp-compact,
+    .rp-btn-ghost):hover {
+  border-color: var(--rp-accent);
+  box-shadow: 0 0 14px var(--rp-glow);
+}
+
+body:not([data-theme="plain"]) :is(.rp-btn:not(.rp-btn-ghost), .sm-open):hover {
+  box-shadow: 0 0 18px var(--rp-glow);
+}
+
+body:not([data-theme="plain"]) :is(.sm-slide:hover .sm-slide-thumb, .rp-card-thumb:hover) {
+  border-color: var(--rp-accent);
+  box-shadow: 0 0 16px var(--rp-glow);
+}
+
+/* Paper: square corners like printed paper */
+body[data-theme="plain"] :is(.rp-btn, .rp-more, .rp-filter, .rp-link, .rp-mini-link, .rp-tag,
+    .rp-card, .rp-card-thumb, .rp-compact, .rp-stats li, .rp-filter-panel, .sm-link, .sm-util,
+    .sm-close, .sm-open, .sm-arrow, .sm-slide-thumb, .theme-quick-toggle, .pp-shot,
+    .pp-pager a) {
+  border-radius: 0 !important;
+}
+
+/*
+ * Paper: hovered, focused or tapped text controls turn solid black, and
+ * everything inside them (text, tags, borders, dots, arrows) turns white.
+ * The plain theme forces span/div/p text black with !important, so these
+ * selectors are deliberately more specific.
+ */
+body[data-theme="plain"] :is(.rp-btn, .rp-more, .rp-filter, .rp-link, .rp-mini-link, .sm-link,
+    .sm-util, .sm-close, .sm-open, .sm-arrow, .theme-quick-toggle, .pp-pager a, .pp-back,
+    .sm-inline a, .rp-card-title a, .rp-compact, #eoyr-filter-toggle):is(:hover, :focus-visible, :active),
+body[data-theme="plain"] .rp-filter[aria-pressed="true"] {
+  background: #000 !important;
+  background-color: #000 !important;
+  border-color: #000 !important;
+  color: #fff !important;
+}
+
+body[data-theme="plain"] :is(.rp-btn, .rp-more, .rp-filter, .rp-link, .rp-mini-link, .sm-link,
+    .sm-util, .sm-close, .sm-open, .sm-arrow, .theme-quick-toggle, .pp-pager a, .pp-back,
+    .sm-inline a, .rp-card-title a, .rp-compact, #eoyr-filter-toggle):is(:hover, :focus-visible, :active) *,
+body[data-theme="plain"] .rp-filter[aria-pressed="true"] * {
+  background-color: transparent !important;
+  border-color: #fff !important;
+  color: #fff !important;
+}
+
+body[data-theme="plain"] :is(.sm-util, .sm-open, .theme-quick-toggle):is(:hover, :focus-visible, :active) :is(.tq-dot, .sm-burger i) {
+  background: #fff !important;
+  background-color: #fff !important;
+}
+
+/* The compact row is the box; its inner link should not paint a second box */
+body[data-theme="plain"] .rp-compact .rp-compact-link,
+body[data-theme="plain"] .rp-compact .rp-compact-link:hover {
+  background: transparent !important;
+}
+
+/*
+ * Paper: media links (website slides, card screenshots, the project
+ * screenshot) never fill black, so the image or title tile stays visible.
+ * They get a heavy outline and an underlined name instead.
+ */
+body[data-theme="plain"] :is(.sm-slide, .rp-card-thumb, .rp-card-thumb:hover, .sm-slide:hover,
+    .sm-slide:focus-visible, .sm-slide:active) {
+  background: transparent !important;
+}
+
+body[data-theme="plain"] :is(.sm-slide:hover, .sm-slide:focus-visible, .sm-slide:active) .sm-slide-thumb,
+body[data-theme="plain"] .rp-card-thumb:is(:hover, :focus-visible, :active) {
+  outline: 3px solid #000;
+  outline-offset: 2px;
+}
+
+body[data-theme="plain"] :is(.sm-slide:hover, .sm-slide:focus-visible, .sm-slide:active) .sm-slide-name {
+  text-decoration: underline !important;
+  text-underline-offset: 4px;
+}
+
+body[data-theme="plain"] :is(.sm-slide, .rp-card-thumb) :is(.pt-tile, .pt-tile *) {
+  background-color: #fff !important;
+  color: #000 !important;
+}
+
+body[data-theme="plain"] .pt-tile {
+  background:
+    linear-gradient(#e6e6e6 1px, transparent 1px) 0 0 / 24px 24px,
+    linear-gradient(90deg, #e6e6e6 1px, transparent 1px) 0 0 / 24px 24px,
+    #fff !important;
+}
+
+/* The page logo link should not turn into a black box */
+body[data-theme="plain"] :is(.sm-logo, .sm-menu-logo-link):hover {
+  background: transparent !important;
 }
