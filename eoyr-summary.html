@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>2026 Year in Review | Elombe Kisala</title>
+  <meta content="width=device-width, initial-scale=1" name="viewport">
+  <meta name="description" content="One-page end of year review of web, CMS and tooling work across Core Home brands.">
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Audiowide&display=swap" rel="stylesheet">
+  <script src="js/theme-toggle.js"></script>
+  <style>
+    :root {
+      --bg: #0a0a0a; --panel: #101a10; --ink: #e8f5e8; --muted: #9db59d;
+      --accent: #00ff41; --line: rgba(0, 255, 65, 0.22);
+    }
+    @media (prefers-color-scheme: light) {
+      :root { --bg: #f6f8f6; --panel: #ffffff; --ink: #14201a; --muted: #4a5d50; --accent: #0a7a2c; --line: rgba(10, 122, 44, 0.25); }
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Exo 2', system-ui, sans-serif; line-height: 1.45; }
+    .page { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+    .topnav { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.85rem; margin-bottom: 20px; }
+    .topnav a { color: var(--accent); text-decoration: none; }
+    header h1 { font-family: 'Audiowide', sans-serif; font-weight: 400; font-size: clamp(1.5rem, 4vw, 2.2rem); margin: 0; color: var(--accent); }
+    header p { margin: 6px 0 0; color: var(--muted); }
+    .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0; }
+    .stat { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; }
+    .stat b { display: block; font-size: 1.7rem; color: var(--accent); line-height: 1.1; }
+    .stat span { font-size: 0.78rem; color: var(--muted); }
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px; }
+    section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; }
+    section h2 { font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; margin: 0 0 8px; color: var(--accent); }
+    ul { margin: 0; padding-left: 18px; }
+    li { margin: 4px 0; font-size: 0.9rem; }
+    li small { color: var(--muted); }
+    .wide { grid-column: 1 / -1; }
+    .context { border-style: dashed; }
+    .context li { color: var(--muted); }
+    footer { margin-top: 16px; font-size: 0.75rem; color: var(--muted); }
+    @media print {
+      :root { --bg: #fff; --panel: #fff; --ink: #111; --muted: #444; --accent: #0a5a22; --line: #bbb; }
+      .topnav { display: none; }
+      .page { padding: 0; max-width: none; }
+      body { font-size: 10.5px; }
+      li { font-size: 10.5px; margin: 2px 0; }
+      .stats, .grid { gap: 6px; margin: 8px 0; }
+      section { padding: 8px 10px; break-inside: avoid; }
+      .stat b { font-size: 1.2rem; }
+      @page { size: letter; margin: 0.4in; }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <nav class="topnav" aria-label="Site">
+      <a href="index.html">&larr; Reports</a>
+      <a href="#" onclick="window.print(); return false;">Print / Save as PDF</a>
+    </nav>
+
+    <header>
+      <h1>2026 Year in Review</h1>
+      <p>Elombe Kisala &middot; Web Development, Core Home &middot; Position through October 30, 2026 &middot; Drafted from repositories, Cloudflare and Webflow</p>
+    </header>
+
+    <div class="stats" aria-label="Headline numbers">
+      <div class="stat"><b>27</b><span>brand entries managed in the corehome.com Brands CMS (26 live)</span></div>
+      <div class="stat"><b>898</b><span>records across the AB1200 / PFAS CMS (V2 209, Colorways 378, Chemicals 36, Products 275)</span></div>
+      <div class="stat"><b>108</b><span>finishes in the Finish Library configurator</span></div>
+      <div class="stat"><b>30</b><span>Cloudflare Workers/Pages deployments in the account</span></div>
+      <div class="stat"><b>3</b><span>brand sites built or relaunched in Oct (Alder Meadow, Winslow Pantry, People of Spice)</span></div>
+    </div>
+
+    <div class="grid">
+      <section class="wide">
+        <h2>PFAS / AB1200 compliance (corehome.com, Webflow)</h2>
+        <ul>
+          <li>Rebuilt the AB1200 / PFAS compliance experience: new <b>/ab1200</b> page and modal, with the earlier version retained as a draft (AB1200 Legacy). <small>Sept 22&ndash;30</small></li>
+          <li>Reorganized the CMS into purpose-built collections: <b>AB1200 Version 2</b> (209 items), <b>AB1200 Colorways</b> (378), <b>Chemicals</b> (36, with its own detail template), alongside <b>AB1200 Products</b> (275). <small>Sept 22&ndash;24</small></li>
+          <li>Kept the public /pfas page current with SEO title and description updates. <small>Updated Jul 29</small></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>corehome.com</h2>
+        <ul>
+          <li>Maintained the Brands page and Brands CMS (27 entries); latest update Oct 26.</li>
+          <li>Refreshed the Home page (Oct 26) and published the <b>New Ventures</b> page (Apr, updated Oct).</li>
+          <li>Updated Collaborate and Innovation pages (Jul) and added a Homescreen Marquee collection (Mar).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>New brand sites (Cloudflare)</h2>
+        <ul>
+          <li><b>Winslow Pantry</b>: trilingual (EN/ES/FR) site, SEO on every page, WCAG 2.2 AA audit passed, GSAP motion, gated style guide, email-scrape protection, winslowpantry.shop. <small>Oct 22</small></li>
+          <li><b>Alder Meadow</b>: brand site, generated product pages, store finder, Basic Auth style guide. <small>Oct 21</small></li>
+          <li><b>People of Spice</b>: 2026 redesign (World of Spice globe, Spice Rack, recipe CMS, GSAP intro) on top of the Sept 2025 launch with Airtable-connected forms. <small>61 commits</small></li>
+          <li><b>Fizz</b>, <b>Medici</b>, <b>Roam &amp; Repeat</b>, <b>Spice St Market</b>, <b>Outlaw Spice</b>: sites iterated and deployed on Workers (Fizz alone shipped 5 Worker iterations in Oct).</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Finish Library / Render Portal</h2>
+        <ul>
+          <li>Built a shared web app replacing Excel/PowerPoint render specs: 3D (Three.js) configurator, finish wheel, graphics shelf, specs card. <small>May 21&ndash;Jun 3</small></li>
+          <li>Imported the factory v3 catalog for ceramic, glass, stainless and plastic: 108 finishes.</li>
+          <li>Stack: Cloudflare Pages, Workers, D1, R2, Access; CI/CD on GitHub Actions; 13-chapter project book for non-technical readers.</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Reporting &amp; tooling</h2>
+        <ul>
+          <li>This Reports dashboard: Cloudflare Worker + KV cache that aggregates weekly GitHub activity across all brand repos.</li>
+          <li>Extended it to track repos outside the main org (per-repo owner support) and added the new brands.</li>
+        </ul>
+      </section>
+
+      <section class="wide context">
+        <h2>Add from emails and threads</h2>
+        <ul>
+          <li>Business impact (retailer feedback, compliance requests answered, launches, revenue or traffic): <i>to add</i></li>
+          <li>Cross-team work (Product Development, Industrial Design, Graphic Design, Sales, Legal): <i>to add</i></li>
+          <li>Recognition, requests handled, process improvements: <i>to add</i></li>
+        </ul>
+      </section>
+    </div>
+
+    <footer>
+      Sources: GitHub commit history, Cloudflare Workers account, Webflow site data for corehome.com. Counts reflect state on Oct 30, 2026. Several commits were produced with Claude Code under direction.
+    </footer>
+  </div>
+</body>
+</html>

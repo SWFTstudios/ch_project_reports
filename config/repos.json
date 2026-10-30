@@ -40,9 +40,31 @@
     {
       "name": "scribble-and-scribe",
       "displayName": "Scribble & Scribe"
+    },
+    {
+      "name": "alder_meadow",
+      "displayName": "Alder Meadow"
+    },
+    {
+      "name": "winslow-pantry",
+      "displayName": "Winslow Pantry"
+    },
+    {
+      "name": "core-home-finish-library",
+      "displayName": "Finish Library",
+      "owner": "SWFTstudios"
+    },
+    {
+      "name": "fizz_website",
+      "displayName": "Fizz",
+      "owner": "SWFTstudios"
+    },
+    {
+      "name": "medici-home",
+      "displayName": "Medici",
+      "owner": "SWFTstudios"
     }
   ],
   "defaultDateRange": "3months",
   "weekStartDay": "monday"
 }
-

@@ -127,11 +127,12 @@ async function fetchRepoCommits(org, repo, token, since = null, until = null) {
  * @param {string} token - GitHub personal access token
  * @param {string} since - ISO date string (YYYY-MM-DD)
  * @param {string} until - ISO date string (YYYY-MM-DD)
+ * @param {Object} ownerMap - Optional repo name -> owner override (repos outside the default org)
  * @returns {Promise<Array>} Array of all commits from all repos
  */
-async function fetchAllCommits(repos, org, token, since = null, until = null) {
+async function fetchAllCommits(repos, org, token, since = null, until = null, ownerMap = {}) {
   const commitPromises = repos.map(repo => 
-    fetchRepoCommits(org, repo, token, since, until).catch(error => {
+    fetchRepoCommits(ownerMap[repo] || org, repo, token, since, until).catch(error => {
       console.error(`Error fetching commits from ${repo}:`, error);
       // Return empty array on error so other repos still work
       return [];
@@ -387,6 +388,12 @@ async function setCachedData(env, key, data, ttl = CACHE_TTL) {
  * @param {Object} env - Worker environment
  * @returns {Promise<Array>} Array of repo objects
  */
+function getOwnerMap(config) {
+  const map = {};
+  config.repos.forEach(r => { if (r.owner) map[r.name] = r.owner; });
+  return map;
+}
+
 async function getRepos(env) {
   // In production, this would fetch from config/repos.json
   // For now, return hardcoded list (can be made configurable via env var)
@@ -466,7 +473,8 @@ async function handleGetWeeks(request, env) {
     config.organization,
     token,
     since,
-    until
+    until,
+    getOwnerMap(config)
   );
   
   // Group by week
@@ -544,7 +552,8 @@ async function handleGetWeekDetail(request, env, weekId) {
     config.organization,
     token,
     since,
-    until
+    until,
+    getOwnerMap(config)
   );
   
   // Filter to only commits in this week
@@ -660,7 +669,8 @@ async function handleGetCommits(request, env) {
     config.organization,
     token,
     effectiveSince,
-    effectiveUntil
+    effectiveUntil,
+    getOwnerMap(config)
   );
   
   console.log(`Total commits fetched: ${commits.length}`);
