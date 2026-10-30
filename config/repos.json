@@ -63,6 +63,11 @@
       "name": "medici-home",
       "displayName": "Medici",
       "owner": "SWFTstudios"
+    },
+    {
+      "name": "pwrd_website",
+      "displayName": "PWRD",
+      "owner": "SWFTstudios"
     }
   ],
   "defaultDateRange": "3months",
