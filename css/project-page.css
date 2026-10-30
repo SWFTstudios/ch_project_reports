@@ -1,0 +1,187 @@
+/**
+ * Project detail page (project.html). Builds on reports.css tokens.
+ */
+
+body {
+  margin: 0;
+  background: var(--rp-bg);
+}
+
+.pp-main {
+  max-width: 880px;
+  margin: 0 auto;
+}
+
+.pp-main > * {
+  max-width: 880px;
+}
+
+.pp-back {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  margin-bottom: 12px;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+/* Screenshot in a simple browser frame */
+.pp-shot {
+  margin: 0;
+  overflow: hidden;
+  border: 1px solid var(--rp-line-strong);
+  border-radius: 12px;
+  background: var(--rp-surface);
+  box-shadow: 0 0 40px var(--rp-tint);
+}
+
+.pp-shot-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--rp-line);
+}
+
+.pp-shot-bar i {
+  width: 9px;
+  height: 9px;
+  border: 1px solid var(--rp-line-strong);
+  border-radius: 50%;
+}
+
+.pp-shot-bar span {
+  overflow: hidden;
+  margin-left: 8px;
+  font-size: 0.75rem;
+  color: var(--rp-muted);
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.pp-shot-img {
+  aspect-ratio: 16 / 10;
+}
+
+.pp-head {
+  padding: 22px 0 8px;
+}
+
+.pp-title {
+  margin: 10px 0 0;
+  font-family: var(--rp-display);
+  font-weight: 400;
+  font-size: clamp(1.75rem, 7vw, 2.75rem);
+  line-height: 1.1;
+  color: var(--rp-accent);
+}
+
+.pp-summary {
+  margin: 12px 0 0;
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: var(--rp-ink);
+}
+
+.pp-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.pp-section {
+  padding-top: 28px;
+}
+
+.pp-wins li {
+  font-size: 1.02rem;
+  margin-bottom: 10px;
+}
+
+.pp-adv {
+  padding-top: 8px;
+}
+
+.pp-adv[hidden] {
+  display: none;
+}
+
+.pp-adv-item {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--rp-line);
+}
+
+.pp-adv-item:last-child {
+  border-bottom: 0;
+}
+
+.pp-adv-item h3 {
+  margin: 0 0 6px;
+  font: 700 1rem var(--rp-text);
+  color: var(--rp-accent);
+}
+
+.pp-adv-item p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--rp-ink);
+}
+
+.pp-adv-toggle[aria-expanded="true"] {
+  background: var(--rp-tint);
+}
+
+/* Previous / next */
+.pp-pager {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 36px;
+}
+
+.pp-pager a {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-height: 64px;
+  padding: 12px 14px;
+  border: 1px solid var(--rp-line);
+  border-radius: var(--rp-radius);
+  text-decoration: none;
+}
+
+.pp-pager a:last-child {
+  text-align: right;
+}
+
+.pp-pager span {
+  font-size: 0.75rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--rp-muted);
+}
+
+.pp-pager strong {
+  font-size: 0.98rem;
+  color: var(--rp-accent);
+}
+
+.pp-loading,
+.pp-missing {
+  padding: 40px 0;
+}
+
+@media (max-width: 767px) {
+  .pp-actions .rp-btn {
+    flex: 1 1 140px;
+  }
+}
+
+@media (min-width: 768px) {
+  .pp-main {
+    padding-top: 104px;
+  }
+}

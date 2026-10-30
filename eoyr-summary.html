@@ -8,6 +8,8 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Audiowide&display=swap" rel="stylesheet">
+  <link href="css/reports.css" rel="stylesheet" type="text/css">
+  <link href="css/site-menu.css" rel="stylesheet" type="text/css">
   <script src="js/theme-toggle.js"></script>
   <style>
     :root {
@@ -18,12 +20,10 @@
     body[data-theme="plain"], body[data-theme="plain"] * { font-family: Helvetica, Arial, sans-serif !important; }
     * { box-sizing: border-box; }
     body { --bg: #0a0a0a; --panel: #101a10; --ink: #e8f5e8; --muted: #9db59d; --accent: #00ff41; --line: rgba(0, 255, 65, 0.22); margin: 0; background: var(--bg); color: var(--ink); font-family: 'Exo 2', system-ui, sans-serif; line-height: 1.45; }
-    .page { max-width: 1040px; margin: 0 auto; padding: 24px 16px 48px; }
+    .page { max-width: 1040px; margin: 0 auto; padding: 88px 16px 48px; }
     .topnav { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.85rem; margin-bottom: 20px; }
     .topnav { align-items: center; }
     .topnav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; min-height: 40px; }
-    .theme-quick-toggle { order: 9; margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid var(--accent); border-radius: 999px; background: transparent; color: var(--accent); font: 600 0.85rem 'Exo 2', sans-serif; cursor: pointer; }
-    .tq-dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
     header h1 { font-family: 'Audiowide', sans-serif; font-weight: 400; font-size: clamp(1.5rem, 4vw, 2.2rem); margin: 0; color: var(--accent); }
     header p { margin: 6px 0 0; color: var(--muted); }
     .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin: 20px 0; }
@@ -42,7 +42,7 @@
     footer { margin-top: 16px; font-size: 0.75rem; color: var(--muted); }
     @media print {
       body, body[data-theme="plain"] { --bg: #fff; --panel: #fff; --ink: #111; --muted: #444; --accent: #0a5a22; --line: #bbb; }
-      .topnav { display: none; }
+      .topnav, #site-menu { display: none; }
       .page { padding: 0; max-width: none; }
       body { font-size: 10.5px; }
       li { font-size: 10.5px; margin: 2px 0; }
@@ -54,10 +54,9 @@
   </style>
 </head>
 <body>
+  <div id="site-menu"></div>
   <div class="page">
     <nav class="topnav" aria-label="Site">
-      <button type="button" class="theme-quick-toggle" aria-label="Switch between Matrix and Paper view"><span class="tq-dot" aria-hidden="true"></span><span class="tq-label">Matrix</span></button>
-      <a href="index.html">&larr; Reports</a>
       <a href="#" onclick="window.print(); return false;">Print / Save as PDF</a>
     </nav>
 
@@ -143,5 +142,9 @@
       Sources: GitHub commit history, Cloudflare Workers account, Webflow site data for corehome.com. Counts reflect state on Oct 30, 2026. Several commits were produced with Claude Code under direction.
     </footer>
   </div>
+  <script src="js/projects-data.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/site-menu.js"></script>
+  <script type="module" src="js/spline-logo.js"></script>
 </body>
 </html>

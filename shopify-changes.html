@@ -8,6 +8,8 @@
   <link href="https://fonts.googleapis.com" rel="preconnect">
   <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin="anonymous">
   <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;600;700&family=Audiowide&display=swap" rel="stylesheet">
+  <link href="css/reports.css" rel="stylesheet" type="text/css">
+  <link href="css/site-menu.css" rel="stylesheet" type="text/css">
   <script src="js/theme-toggle.js"></script>
   <style>
     :root {
@@ -18,12 +20,10 @@
     body[data-theme="plain"], body[data-theme="plain"] * { font-family: Helvetica, Arial, sans-serif !important; }
     * { box-sizing: border-box; }
     body { --bg: #0a0a0a; --panel: #101a10; --ink: #e8f5e8; --muted: #9db59d; --accent: #00ff41; --line: rgba(0, 255, 65, 0.22); margin: 0; background: var(--bg); color: var(--ink); font-family: 'Exo 2', system-ui, sans-serif; line-height: 1.45; }
-    .page { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
+    .page { max-width: 960px; margin: 0 auto; padding: 88px 16px 48px; }
     .topnav { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.85rem; margin-bottom: 20px; }
     .topnav { align-items: center; }
     .topnav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; min-height: 40px; }
-    .theme-quick-toggle { order: 9; margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid var(--accent); border-radius: 999px; background: transparent; color: var(--accent); font: 600 0.85rem 'Exo 2', sans-serif; cursor: pointer; }
-    .tq-dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
     h1 { font-family: 'Audiowide', sans-serif; font-weight: 400; font-size: clamp(1.4rem, 4vw, 2rem); margin: 0; color: var(--accent); }
     .lede { color: var(--muted); margin: 6px 0 20px; font-size: 0.9rem; }
     section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
@@ -38,12 +38,8 @@
   </style>
 </head>
 <body>
+  <div id="site-menu"></div>
   <div class="page">
-    <nav class="topnav" aria-label="Site">
-      <button type="button" class="theme-quick-toggle" aria-label="Switch between Matrix and Paper view"><span class="tq-dot" aria-hidden="true"></span><span class="tq-label">Matrix</span></button>
-      <a href="index.html">&larr; Reports</a>
-      <a href="eoyr-summary.html">Year in Review</a>
-    </nav>
 
     <h1>Shopify changes since Nov 2025</h1>
     <p class="lede">Dated from Shopify's own created and updated timestamps. Shopify does not keep an edit-by-edit history, so theme code edits made in the editor show only as a last-updated date.</p>
@@ -90,5 +86,9 @@
 
     <footer>Source: Shopify Admin API (themes, products, pages, collections, blogs), read Oct 30, 2026.</footer>
   </div>
+  <script src="js/projects-data.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/site-menu.js"></script>
+  <script type="module" src="js/spline-logo.js"></script>
 </body>
 </html>

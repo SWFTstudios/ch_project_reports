@@ -21,6 +21,7 @@
     
     // Update toggle button if it exists
     updateToggleButton(theme);
+    window.dispatchEvent(new CustomEvent('eoyr-theme-change', { detail: theme }));
   }
   
   // Toggle between themes
@@ -77,6 +78,8 @@
   // Auto-initialize if toggle button exists
   document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('.theme-quick-toggle').forEach(btn => {
+      if (btn.dataset.bound) return;
+      btn.dataset.bound = '1';
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();

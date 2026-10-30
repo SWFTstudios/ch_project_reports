@@ -1,7 +1,6 @@
 /**
- * Projects at a glance: renders plain-language project cards from
- * window.EOYR_PROJECTS (js/projects-data.js), with type filters and a
- * "More details" toggle per card.
+ * Shared project helpers (window.EOYR_UI) plus the "Projects at a glance"
+ * section on the Reports page. Data comes from js/projects-data.js.
  */
 (function () {
   const FILTERS = [
@@ -17,55 +16,70 @@
     return div.innerHTML;
   }
 
-  function cardHTML(p) {
-    const detailsId = `project-details-${p.id}`;
-    const wins = (p.wins || []).map(w => `<li>${esc(w)}</li>`).join('');
-    const details = (p.details || []).map(d => `<li>${esc(d)}</li>`).join('');
-    const links = [];
-    if (p.url) links.push(`<a class="rp-link" href="${esc(p.url)}" target="_blank" rel="noopener">Visit site</a>`);
-    if (p.link) links.push(`<a class="rp-link" href="${esc(p.link.href)}">${esc(p.link.label)}</a>`);
-    if (p.repo) links.push(`<button type="button" class="rp-link" data-activity="${esc(p.repo)}">See activity log</button>`);
+  function projects() {
+    return window.EOYR_PROJECTS || [];
+  }
 
+  function findProject(id) {
+    return projects().find(p => p.id === id);
+  }
+
+  function projectUrl(p) {
+    return `project.html?id=${encodeURIComponent(p.id)}`;
+  }
+
+  // Screenshot when we have one, otherwise a title tile in the current theme
+  function thumbHTML(p, opts = {}) {
+    const loading = opts.eager ? 'eager' : 'lazy';
+    if (p.thumb) {
+      return `<img class="pt-img" src="${esc(p.thumb)}" alt="${esc(opts.alt != null ? opts.alt : p.name + ' website')}" loading="${loading}" decoding="async" width="960" height="600">`;
+    }
+    return `<div class="pt-tile" role="img" aria-label="${esc(p.name)}"><span class="pt-tile-mark">${esc(p.name)}</span><span class="pt-tile-name">${esc(p.typeLabel)}</span></div>`;
+  }
+
+  window.EOYR_UI = { esc, findProject, projectUrl, thumbHTML, projects };
+
+  function cardHTML(p) {
+    const wins = (p.wins || []).map(w => `<li>${esc(w)}</li>`).join('');
     return `
       <article class="rp-card" data-type="${esc(p.type)}">
+        <a class="rp-card-thumb" href="${projectUrl(p)}" tabindex="-1" aria-hidden="true">${thumbHTML(p, { alt: '' })}</a>
         <header class="rp-card-head">
-          <h3 class="rp-card-title">${esc(p.name)}</h3>
+          <h3 class="rp-card-title"><a href="${projectUrl(p)}">${esc(p.name)}</a></h3>
           <p class="rp-card-meta"><span class="rp-tag">${esc(p.typeLabel)}</span>${p.period ? `<span>${esc(p.period)}</span>` : ''}</p>
         </header>
         <p class="rp-card-summary">${esc(p.summary)}</p>
         ${wins ? `<h4 class="rp-label">What got done</h4><ul class="rp-wins">${wins}</ul>` : ''}
-        <button type="button" class="rp-more" aria-expanded="false" aria-controls="${detailsId}">
-          <span class="rp-more-text">More details</span><span class="rp-more-icon" aria-hidden="true">+</span>
-        </button>
-        <div class="rp-details" id="${detailsId}" hidden>
-          ${details ? `<h4 class="rp-label">Behind the scenes</h4><ul class="rp-detail-list">${details}</ul>` : ''}
-          ${links.length ? `<div class="rp-links">${links.join('')}</div>` : ''}
-        </div>
+        <a class="rp-more" href="${projectUrl(p)}">
+          <span class="rp-more-text">More details</span><span class="rp-more-icon" aria-hidden="true">&rarr;</span>
+        </a>
       </article>`;
   }
 
   function compactHTML(p) {
-    const name = p.url
-      ? `<a href="${esc(p.url)}" target="_blank" rel="noopener">${esc(p.name)}</a>`
-      : esc(p.name);
-    const activity = p.repo
-      ? `<button type="button" class="rp-mini-link" data-activity="${esc(p.repo)}">Activity</button>`
-      : '';
     return `
       <li class="rp-compact" data-type="${esc(p.type)}">
-        <div><strong>${name}</strong> <span class="rp-tag">${esc(p.typeLabel)}</span></div>
-        <p>${esc(p.summary)}</p>
-        ${activity}
+        <a class="rp-compact-link" href="${projectUrl(p)}">
+          <span class="rp-compact-name"><strong>${esc(p.name)}</strong> <span class="rp-tag">${esc(p.typeLabel)}</span></span>
+          <span class="rp-compact-summary">${esc(p.summary)}</span>
+        </a>
+        <span class="rp-compact-arrow" aria-hidden="true">&rarr;</span>
       </li>`;
   }
 
-  function showActivity(repo) {
-    const log = document.getElementById('activity-log');
+  function openFilters() {
     const panel = document.getElementById('eoyr-filter-panel');
-    if (panel) panel.hidden = false;
     const toggle = document.getElementById('eoyr-filter-toggle');
-    if (toggle) toggle.setAttribute('aria-expanded', 'true');
+    if (panel) panel.hidden = false;
+    if (toggle) {
+      toggle.setAttribute('aria-expanded', 'true');
+      toggle.textContent = 'Hide filters';
+    }
+  }
 
+  // Filter the activity log to one project and scroll to it
+  function showActivity(repo) {
+    openFilters();
     const labels = document.querySelectorAll('.eoyr-project-checkbox');
     if (labels.length && typeof window.triggerRepoFilterChange === 'function') {
       labels.forEach(label => {
@@ -77,7 +91,23 @@
       if (typeof window.updateSelectedProjects === 'function') window.updateSelectedProjects();
       window.triggerRepoFilterChange();
     }
+    const log = document.getElementById('activity-log');
     if (log) log.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // project.html links to index.html?repo=...#activity-log; the project
+  // checkboxes arrive with the API response, so wait for them briefly
+  function applyRepoParam() {
+    const repo = new URLSearchParams(location.search).get('repo');
+    if (!repo || !document.getElementById('activity-log')) return;
+    let tries = 0;
+    const timer = setInterval(() => {
+      tries++;
+      if (document.querySelector('.eoyr-project-checkbox') || tries > 40) {
+        clearInterval(timer);
+        showActivity(repo);
+      }
+    }, 250);
   }
 
   function applyFilter(root, type) {
@@ -94,11 +124,10 @@
 
   function render() {
     const root = document.getElementById('projects-root');
-    const projects = window.EOYR_PROJECTS || [];
-    if (!root || !projects.length) return;
+    if (!root || !projects().length) return;
 
-    const featured = projects.filter(p => p.wins && p.wins.length);
-    const other = projects.filter(p => !(p.wins && p.wins.length));
+    const featured = projects().filter(p => p.wins && p.wins.length);
+    const other = projects().filter(p => !(p.wins && p.wins.length));
 
     root.innerHTML = `
       <div class="rp-filters" role="group" aria-label="Show projects by type">
@@ -112,20 +141,7 @@
 
     root.addEventListener('click', e => {
       const filter = e.target.closest('.rp-filter');
-      if (filter) return applyFilter(root, filter.dataset.filter);
-
-      const more = e.target.closest('.rp-more');
-      if (more) {
-        const open = more.getAttribute('aria-expanded') !== 'true';
-        more.setAttribute('aria-expanded', String(open));
-        more.querySelector('.rp-more-text').textContent = open ? 'Fewer details' : 'More details';
-        more.querySelector('.rp-more-icon').textContent = open ? '−' : '+';
-        document.getElementById(more.getAttribute('aria-controls')).hidden = !open;
-        return;
-      }
-
-      const activity = e.target.closest('[data-activity]');
-      if (activity) showActivity(activity.dataset.activity);
+      if (filter) applyFilter(root, filter.dataset.filter);
     });
   }
 
@@ -149,6 +165,7 @@
   function init() {
     render();
     setupFilterPanel();
+    applyRepoParam();
   }
 
   if (document.readyState === 'loading') {
