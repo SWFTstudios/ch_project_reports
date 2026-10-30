@@ -177,8 +177,8 @@ function renderCommitGroups(data, sortOptions = {}) {
     console.log('No groups to display');
     container.innerHTML = `
       <div class="eoyr-empty-state">
-        <h3>No commits found</h3>
-        <p>Try adjusting your date range, project filters, or search term.</p>
+        <h3>No updates in this period</h3>
+        <p>Try a longer time period, another project, or a different search.</p>
       </div>
     `;
     return;
@@ -221,13 +221,13 @@ function renderCommitGroups(data, sortOptions = {}) {
       <div class="group-header-content">
         <div class="group-header-main">
           <h3 class="group-date-label">${group.label}</h3>
-          <div class="group-projects-list">${group.repos.join(' • ')}</div>
+          <div class="group-projects-list">${group.repos.map(displayRepoName).join(' • ')}</div>
         </div>
         <div class="group-header-stats">
-          <span class="group-stat">${group.commitCount} ${group.commitCount === 1 ? 'commit' : 'commits'}</span>
+          <span class="group-stat">${group.commitCount} ${group.commitCount === 1 ? 'update' : 'updates'}</span>
           <span class="group-stat">${group.repoCount} ${group.repoCount === 1 ? 'project' : 'projects'}</span>
-          <button class="summary-button" onclick="toggleSummary('${group.id}', event)" title="View AI Summary">
-            📊 Summary
+          <button type="button" class="summary-button" onclick="toggleSummary('${group.id}', event)" title="What changed this period">
+            What changed
           </button>
         </div>
       </div>
@@ -299,7 +299,7 @@ function renderCommitGroups(data, sortOptions = {}) {
             <h4 class="block-title commit-message">${escapeHtml(truncatedMessage)}</h4>
           </div>
           <div class="commit-meta">
-            <span class="commit-repo">${commit.repo}</span>
+            <span class="commit-repo">${escapeHtml(displayRepoName(commit.repo))}</span>
             <span class="commit-author">${escapeHtml(commit.author)}</span>
             <span class="commit-date">${dateStr}</span>
           </div>
@@ -335,6 +335,17 @@ function renderCommitGroups(data, sortOptions = {}) {
  * @param {string} text - Text to escape
  * @returns {string} Escaped text
  */
+const REPO_DISPLAY_NAMES = {};
+
+/**
+ * Returns the friendly project name for a repo slug
+ * @param {string} repo - Repository name
+ * @returns {string} Display name
+ */
+function displayRepoName(repo) {
+  return REPO_DISPLAY_NAMES[repo] || repo;
+}
+
 function escapeHtml(text) {
   const div = document.createElement('div');
   div.textContent = text;
@@ -570,7 +581,7 @@ function showLoading() {
     container.innerHTML = `
       <div class="eoyr-loading">
         <div class="eoyr-loading-spinner"></div>
-        <p>Loading weeks...</p>
+        <p>Loading activity...</p>
       </div>
     `;
   }
@@ -585,9 +596,10 @@ function showError(message) {
   if (container) {
     container.innerHTML = `
       <div class="eoyr-empty-state">
-        <h3>Error loading data</h3>
-        <p>${message}</p>
-        <button class="eoyr-filter-button" onclick="location.reload()">Retry</button>
+        <h3>The activity log didn't load</h3>
+        <p>The project summaries above are still current. Try again in a moment.</p>
+        <p class="eoyr-error-detail">${escapeHtml(message)}</p>
+        <button type="button" class="eoyr-filter-button" onclick="location.reload()">Try again</button>
       </div>
     `;
   }
@@ -598,6 +610,7 @@ function showError(message) {
  * @param {Array} repos - Array of repo objects
  */
 async function populateRepoFilter(repos) {
+  repos.forEach(repo => { REPO_DISPLAY_NAMES[repo.name] = repo.displayName || repo.name; });
   const container = document.getElementById('eoyr-filter-repos');
   if (!container) return;
   
@@ -810,7 +823,7 @@ function generateSimpleSummary(commits, groupId) {
   const categories = categorizeCommits(commits);
   
   let html = '<div class="commit-summary">';
-  html += '<h4 class="summary-title">📝 Commit Summary</h4>';
+  html += '<h4 class="summary-title">What changed</h4>';
   html += '<div class="summary-divider"></div>';
   
   // Count by category
@@ -825,7 +838,7 @@ function generateSimpleSummary(commits, groupId) {
   // Features
   if (stats.features > 0) {
     html += `<div class="summary-category">`;
-    html += `<h5 class="summary-category-title">🚀 Features & Improvements (${stats.features})</h5>`;
+    html += `<h5 class="summary-category-title">New and improved (${stats.features})</h5>`;
     html += `<ul class="summary-list">`;
     categories.features.forEach(commit => {
       const messageFirstLine = commit.message.split('\n')[0];
@@ -837,7 +850,7 @@ function generateSimpleSummary(commits, groupId) {
   // Fixes
   if (stats.fixes > 0) {
     html += `<div class="summary-category">`;
-    html += `<h5 class="summary-category-title">🔧 Bug Fixes (${stats.fixes})</h5>`;
+    html += `<h5 class="summary-category-title">Fixes (${stats.fixes})</h5>`;
     html += `<ul class="summary-list">`;
     categories.fixes.forEach(commit => {
       const messageFirstLine = commit.message.split('\n')[0];
@@ -849,7 +862,7 @@ function generateSimpleSummary(commits, groupId) {
   // Documentation
   if (stats.docs > 0) {
     html += `<div class="summary-category">`;
-    html += `<h5 class="summary-category-title">📚 Documentation (${stats.docs})</h5>`;
+    html += `<h5 class="summary-category-title">Guides and documentation (${stats.docs})</h5>`;
     html += `<ul class="summary-list">`;
     categories.docs.forEach(commit => {
       const messageFirstLine = commit.message.split('\n')[0];
@@ -861,7 +874,7 @@ function generateSimpleSummary(commits, groupId) {
   // Cleanup
   if (stats.cleanup > 0) {
     html += `<div class="summary-category">`;
-    html += `<h5 class="summary-category-title">🗑️ Cleanup & Refactoring (${stats.cleanup})</h5>`;
+    html += `<h5 class="summary-category-title">Clean-up (${stats.cleanup})</h5>`;
     html += `<ul class="summary-list">`;
     categories.cleanup.forEach(commit => {
       const messageFirstLine = commit.message.split('\n')[0];
@@ -873,7 +886,7 @@ function generateSimpleSummary(commits, groupId) {
   // Other
   if (stats.other > 0) {
     html += `<div class="summary-category">`;
-    html += `<h5 class="summary-category-title">📌 Other Changes (${stats.other})</h5>`;
+    html += `<h5 class="summary-category-title">Other updates (${stats.other})</h5>`;
     html += `<ul class="summary-list">`;
     categories.other.forEach(commit => {
       const messageFirstLine = commit.message.split('\n')[0];
@@ -896,7 +909,7 @@ function generateSimpleSummary(commits, groupId) {
         cursor: pointer;
         transition: all 0.3s ease;
       ">
-        📋 View Detailed Commits
+        See every update
       </button>
     </div>
   `;

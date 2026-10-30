@@ -34,6 +34,13 @@
   
   // Update toggle button appearance
   function updateToggleButton(theme) {
+    document.querySelectorAll('.theme-quick-toggle').forEach(btn => {
+      const label = btn.querySelector('.tq-label');
+      if (label) label.textContent = theme === MATRIX_THEME ? 'Matrix' : 'Paper';
+      btn.setAttribute('data-theme', theme);
+      btn.setAttribute('aria-pressed', String(theme === PLAIN_THEME));
+    });
+
     const toggleButton = document.getElementById('theme-toggle');
     console.log('🔘 Updating toggle button, found element:', !!toggleButton);
     if (!toggleButton) {
@@ -44,7 +51,7 @@
     const statusText = toggleButton.querySelector('.toggle-status');
     console.log('🔘 Status text element found:', !!statusText);
     if (statusText) {
-      const newText = theme === MATRIX_THEME ? 'Matrix Mode' : 'Minimal Mode';
+      const newText = theme === MATRIX_THEME ? 'Matrix Mode' : 'Paper Mode';
       statusText.textContent = newText;
       console.log('✅ Status text updated to:', newText);
     }
@@ -69,6 +76,15 @@
   
   // Auto-initialize if toggle button exists
   document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.theme-quick-toggle').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        toggleTheme();
+      });
+    });
+    updateToggleButton(getCurrentTheme());
+
     const toggleButton = document.getElementById('theme-toggle');
     if (toggleButton) {
       toggleButton.addEventListener('click', (e) => {

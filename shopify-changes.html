@@ -14,14 +14,16 @@
       --bg: #0a0a0a; --panel: #101a10; --ink: #e8f5e8; --muted: #9db59d;
       --accent: #00ff41; --line: rgba(0, 255, 65, 0.22);
     }
-    @media (prefers-color-scheme: light) {
-      :root { --bg: #f6f8f6; --panel: #ffffff; --ink: #14201a; --muted: #4a5d50; --accent: #0a7a2c; --line: rgba(10, 122, 44, 0.25); }
-    }
+    body[data-theme="plain"] { --bg: #fff; --panel: #fff; --ink: #000; --muted: #444; --accent: #000; --line: #d0d0d0; }
+    body[data-theme="plain"], body[data-theme="plain"] * { font-family: Helvetica, Arial, sans-serif !important; }
     * { box-sizing: border-box; }
-    body { margin: 0; background: var(--bg); color: var(--ink); font-family: 'Exo 2', system-ui, sans-serif; line-height: 1.45; }
+    body { --bg: #0a0a0a; --panel: #101a10; --ink: #e8f5e8; --muted: #9db59d; --accent: #00ff41; --line: rgba(0, 255, 65, 0.22); margin: 0; background: var(--bg); color: var(--ink); font-family: 'Exo 2', system-ui, sans-serif; line-height: 1.45; }
     .page { max-width: 960px; margin: 0 auto; padding: 24px 16px 48px; }
     .topnav { display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.85rem; margin-bottom: 20px; }
-    .topnav a { color: var(--accent); text-decoration: none; }
+    .topnav { align-items: center; }
+    .topnav a { color: var(--accent); text-decoration: none; display: inline-flex; align-items: center; min-height: 40px; }
+    .theme-quick-toggle { order: 9; margin-left: auto; display: inline-flex; align-items: center; gap: 8px; min-height: 40px; padding: 0 14px; border: 1px solid var(--accent); border-radius: 999px; background: transparent; color: var(--accent); font: 600 0.85rem 'Exo 2', sans-serif; cursor: pointer; }
+    .tq-dot { width: 10px; height: 10px; border-radius: 50%; background: currentColor; }
     h1 { font-family: 'Audiowide', sans-serif; font-weight: 400; font-size: clamp(1.4rem, 4vw, 2rem); margin: 0; color: var(--accent); }
     .lede { color: var(--muted); margin: 6px 0 20px; font-size: 0.9rem; }
     section { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; margin-bottom: 14px; }
@@ -38,6 +40,7 @@
 <body>
   <div class="page">
     <nav class="topnav" aria-label="Site">
+      <button type="button" class="theme-quick-toggle" aria-label="Switch between Matrix and Paper view"><span class="tq-dot" aria-hidden="true"></span><span class="tq-label">Matrix</span></button>
       <a href="index.html">&larr; Reports</a>
       <a href="eoyr-summary.html">Year in Review</a>
     </nav>
